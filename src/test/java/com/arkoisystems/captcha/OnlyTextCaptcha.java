@@ -4,10 +4,11 @@ public class OnlyTextCaptcha
 {
     
     public static void main(final String[] args) {
-        Captcha.CaptchaBuilder builder = Captcha.builder(300, 100)
-                .textHalfRotation(30);
+        Captcha captcha = Captcha.builder(300, 100)
+                .textHalfRotation(30)
+                .build();
         
-        CaptchaGenerator.writeGIF(builder, "./images/only-text.gif", 10);
+        CaptchaGenerator.writeGIF(captcha, "./images/only-text.gif", 10, 250);
     }
     
 }

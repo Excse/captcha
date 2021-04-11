@@ -17,7 +17,7 @@ Captcha GIF using text, gaussian and strokes:
 For examples check out: [Captcha Tests](src/test/java/com/arkoisystems/captcha)
 
 ## Installation
-###build.gradle
+### Gradle
 
 When using gradle you just need to add the maven repository to the end of the 
 repositories:

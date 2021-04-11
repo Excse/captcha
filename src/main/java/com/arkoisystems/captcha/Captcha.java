@@ -2,9 +2,8 @@ package com.arkoisystems.captcha;
 
 import com.arkoisystems.captcha.utils.Callback;
 import com.arkoisystems.captcha.utils.GraphicUtils;
+import com.arkoisystems.captcha.utils.RandomUtils;
 import lombok.*;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
@@ -32,7 +31,7 @@ public class Captcha
     @Builder.Default
     @Getter
     private final Callback<String, Integer> textGenerator = value -> {
-        final String randomString = RandomStringUtils.randomAlphanumeric(value);
+        final String randomString = RandomUtils.randomAlphanumeric(value);
         final byte[] stringBytes = randomString.getBytes(StandardCharsets.UTF_8);
         return new String(stringBytes);
     };
@@ -105,22 +104,22 @@ public class Captcha
     
     private void drawText(final Graphics2D graphics) {
         graphics.setColor(this.getStrokeNoiseColor());
-    
+        
         final float segment = (float) this.getWidth() / (float) this.getTextLength();
-        for(int index = 0; index < this.getTextLength(); index++) {
+        for (int index = 0; index < this.getTextLength(); index++) {
             final float minX = (index * segment) + (segment / 4);
             final float maxX = ((index + 1) * segment) - (segment / 4);
             final float minY = graphics.getFontMetrics().getHeight();
             final float maxY = this.getHeight() - graphics.getFontMetrics().getHeight();
-        
+            
             final int randomX = (int) RandomUtils.nextFloat(minX, maxX);
             final int randomY = (int) RandomUtils.nextFloat(minY, maxY);
-        
+            
             final double theta = Math.toRadians(ThreadLocalRandom.current().nextInt(
                     -this.getTextHalfRotation(),
                     this.getTextHalfRotation())
             );
-        
+            
             graphics.rotate(theta, randomX, randomY);
             graphics.drawChars(this.getText().toCharArray(), index, 1, randomX, randomY);
             graphics.rotate(-theta, randomX, randomY);
@@ -138,12 +137,12 @@ public class Captcha
                 
                 final int gray = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
                 final byte alpha = (byte) color.getAlpha();
-            
+                
                 final double newColorD = Math.min(Math.max(0, gray + noise), 255);
                 final byte newColor = (byte) Math.round(newColorD);
-            
+                
                 final int rgb = GraphicUtils.rgbaToInt(newColor, newColor, newColor, alpha);
-            
+                
                 image.setRGB(x, y, rgb);
             }
         }
@@ -157,16 +156,16 @@ public class Captcha
         for (int index = 0; index < strokeNoiseAmount; index++) {
             final Path2D.Double path = new Path2D.Double();
             path.moveTo(
-                    RandomUtils.nextInt(0, this.getWidth()),
-                    RandomUtils.nextInt(0, this.getHeight())
+                    RandomUtils.nextInt(this.getWidth()),
+                    RandomUtils.nextInt(this.getHeight())
             );
             path.curveTo(
-                    RandomUtils.nextInt(0, this.getWidth()),
-                    RandomUtils.nextInt(0, this.getHeight()),
-                    RandomUtils.nextInt(0, this.getWidth()),
-                    RandomUtils.nextInt(0, this.getHeight()),
-                    RandomUtils.nextInt(0, this.getWidth()),
-                    RandomUtils.nextInt(0, this.getHeight())
+                    RandomUtils.nextInt(this.getWidth()),
+                    RandomUtils.nextInt(this.getHeight()),
+                    RandomUtils.nextInt(this.getWidth()),
+                    RandomUtils.nextInt(this.getHeight()),
+                    RandomUtils.nextInt(this.getWidth()),
+                    RandomUtils.nextInt(this.getHeight())
             );
             graphics.draw(path);
         }

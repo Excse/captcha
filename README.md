@@ -33,7 +33,7 @@ allprojects {
 Then you can just add the dependency:
 ```groovy
 dependencies {
-        implementation 'com.github.Excse:captcha:Tag'
+    implementation 'com.github.Excse:captcha:master-SNAPSHOT'
 }
 ```
 

@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'com.arkoisystems'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+    
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+}
+
+test {
+    useJUnitPlatform()
+}
